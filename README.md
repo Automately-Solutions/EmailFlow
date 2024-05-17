@@ -1,5 +1,5 @@
 ## EmailFlow: Automated Email Marketing and CRM Integration 📧
-
+[![wakatime](https://wakatime.com/badge/github/Aby-ss/EmailFlow.svg)](https://wakatime.com/badge/github/Aby-ss/EmailFlow)
 ### Overview
 
 EmailFlow is a robust email marketing automation tool designed to streamline your marketing campaigns. With EmailFlow, you can automate the sending of emails, manage your email lists effortlessly, and grow your audience through effective sign-up forms.
