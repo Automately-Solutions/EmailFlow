@@ -2,43 +2,39 @@ import csv
 from datetime import datetime
 
 class EmailListManager:
-    def __init__(self, csv_file='email_list.csv'):
-        self.csv_file = csv_file
-        self.email_list = self.load_email_list()
+    def __init__(self, filename='email_list.csv'):
+        self.filename = filename
+        self.email_list = []
+        self.load_email_list()
 
     def load_email_list(self):
-        email_list = []
         try:
-            with open(self.csv_file, mode='r', newline='') as file:
+            with open(self.filename, mode='r', newline='') as file:
                 reader = csv.DictReader(file)
-                for row in reader:
-                    email_list.append(row)
+                self.email_list = list(reader)
         except FileNotFoundError:
-            pass  # If the file does not exist, start with an empty list
-        return email_list
+            pass
 
-    def save_email_list(self):
-        with open(self.csv_file, mode='w', newline='') as file:
-            fieldnames = ["Email address", "Prospect / Customer Name", "User Added", "Emails Sent"]
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            for email_entry in self.email_list:
-                writer.writerow(email_entry)
+    def get_email_list(self):
+        return self.email_list
 
     def add_email(self, email, name):
-        new_email = {
+        entry = {
             "Email address": email,
             "Prospect / Customer Name": name,
-            "User Added": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            "Emails Sent": 0
+            "User added": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            "Emails sent": 0
         }
-        self.email_list.append(new_email)
+        self.email_list.append(entry)
         self.save_email_list()
 
     def import_email_list(self, emails):
         for email, name in emails:
             self.add_email(email, name)
-        self.save_email_list()
 
-    def get_email_list(self):
-        return self.email_list
+    def save_email_list(self):
+        with open(self.filename, mode='w', newline='') as file:
+            fieldnames = ["Email address", "Prospect / Customer Name", "User added", "Emails sent"]
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self.email_list)

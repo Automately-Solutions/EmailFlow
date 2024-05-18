@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.progress import Progress
 from rich.traceback import install
 from email_list_manager import EmailListManager
-from campaign_manager import Campaign
+from campaign_manager import CampaignManager
 from email_sender import EmailSender
 
 install(show_locals=True)
@@ -36,7 +36,7 @@ def main_menu():
     console.print("4. Create Email Campaign")
     console.print("5. Schedule Campaign")
     console.print("6. Send Emails")
-    console.print("7. View Email Log")
+    console.print("7. View Campaign Log")
     console.print("8. Exit")
 
     choice = input("\nEnter your choice: ")
@@ -82,22 +82,26 @@ def create_email_campaign(campaign_manager):
     subject = input("Enter campaign subject: ")
     from_email = input("Enter from email address: ")
     template_id = input("Enter email template ID: ")
-    campaign = campaign_manager.create_campaign(name, subject, from_email, template_id)
+    description = input("Enter campaign description: ")
+    campaign = campaign_manager.create_campaign(name, subject, from_email, template_id, description)
     print(f"Campaign '{name}' created.")
     input("\nPress Enter to return to the main menu.")
 
-def schedule_campaign(campaign_manager, manager):
-    email_list = manager.get_email_list()
-    if not email_list:
-        print("Email list is empty. Cannot schedule campaign.")
+def schedule_campaign(campaign_manager, manager, email_sender):
+    campaign_name = input("Enter the campaign name to schedule: ")
+    campaign = campaign_manager.get_campaign(campaign_name)
+    if not campaign:
+        print("Campaign not found. Please create the campaign first.")
     else:
-        campaign_manager.schedule_campaign(campaign_manager.create_campaign(
-            name='Scheduled Campaign',
-            subject='Your Subject Here',
-            from_email='your-email@example.com',
-            template_id='your-template-id'
-        ), email_list)
-        print("Campaign scheduled.")
+        email_list = manager.get_email_list()
+        if not email_list:
+            print("Email list is empty. Cannot schedule campaign.")
+        else:
+            for entry in email_list:
+                email = entry["Email address"]
+                name = entry["Prospect / Customer Name"]
+                email_sender.send_email(email, name, campaign)
+            print("Campaign scheduled and emails sent.")
     input("\nPress Enter to return to the main menu.")
 
 def send_emails(email_sender, manager):
@@ -110,14 +114,13 @@ def send_emails(email_sender, manager):
             name = entry["Prospect / Customer Name"]
             email_sender.send_email(email, name)
     input("\nPress Enter to return to the main menu.")
-
-def emails_log():
-    print("Sent Emails Log:")
-    print("No logs available.")
+    
+def emails_log(campaign_manager):
+    campaign_manager.view_campaigns()
     input("\nPress Enter to return to the main menu.")
 
 email_list_manager = EmailListManager()
-campaign_manager = Campaign('config.yaml')
+campaign_manager = CampaignManager()
 email_sender = EmailSender()
 
 while True:
@@ -133,11 +136,11 @@ while True:
     elif choice == '4':
         create_email_campaign(campaign_manager)
     elif choice == '5':
-        schedule_campaign(campaign_manager, email_list_manager)
+        schedule_campaign(campaign_manager, email_list_manager, email_sender)
     elif choice == '6':
         send_emails(email_sender, email_list_manager)
     elif choice == '7':
-        emails_log()
+        emails_log(campaign_manager)
     elif choice == '8':
         print("Exiting EmailFlow. Goodbye!")
         break
