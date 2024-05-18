@@ -9,6 +9,7 @@ from rich.progress import Progress
 from rich.traceback import install
 from email_list_manager import EmailListManager
 from campaign_manager import Campaign
+from email_sender import EmailSender
 
 install(show_locals=True)
 
@@ -34,8 +35,9 @@ def main_menu():
     console.print("3. Import Email List")
     console.print("4. Create Email Campaign")
     console.print("5. Schedule Campaign")
-    console.print("6. View Email Log")
-    console.print("7. Exit")
+    console.print("6. Send Emails")
+    console.print("7. View Email Log")
+    console.print("8. Exit")
 
     choice = input("\nEnter your choice: ")
     return choice
@@ -98,6 +100,17 @@ def schedule_campaign(campaign_manager, manager):
         print("Campaign scheduled.")
     input("\nPress Enter to return to the main menu.")
 
+def send_emails(email_sender, manager):
+    email_list = manager.get_email_list()
+    if not email_list:
+        print("Email list is empty. Cannot send emails.")
+    else:
+        for entry in email_list:
+            email = entry["Email address"]
+            name = entry["Prospect / Customer Name"]
+            email_sender.send_email(email, name)
+    input("\nPress Enter to return to the main menu.")
+
 def emails_log():
     print("Sent Emails Log:")
     print("No logs available.")
@@ -105,6 +118,7 @@ def emails_log():
 
 email_list_manager = EmailListManager()
 campaign_manager = Campaign('config.yaml')
+email_sender = EmailSender()
 
 while True:
     choice = main_menu()
@@ -121,8 +135,10 @@ while True:
     elif choice == '5':
         schedule_campaign(campaign_manager, email_list_manager)
     elif choice == '6':
-        emails_log()
+        send_emails(email_sender, email_list_manager)
     elif choice == '7':
+        emails_log()
+    elif choice == '8':
         print("Exiting EmailFlow. Goodbye!")
         break
     else:
