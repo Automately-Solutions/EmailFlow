@@ -36,8 +36,8 @@ class EmailListManager:
         self.save_email_list()
 
     def import_email_list(self, emails):
-        for email in emails:
-            self.add_email(email, "Imported")
+        for email, name in emails:
+            self.add_email(email, name)
         self.save_email_list()
 
     def get_email_list(self):

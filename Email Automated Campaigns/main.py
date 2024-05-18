@@ -1,29 +1,16 @@
 import time
 import os
-
+import csv
 from rich import box
 from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.console import Console
 from rich.progress import Progress
 from rich.traceback import install
-
 from email_list_manager import EmailListManager
 from campaign_manager import Campaign
 
 install(show_locals=True)
-
-with Progress() as progress:
-
-    task1 = progress.add_task("[red]Downloading users...", total=1000)
-    task2 = progress.add_task("[green]Writing emails...", total=1000)
-    task3 = progress.add_task("[blue]Booting up systems...", total=1000)
-
-    while not progress.finished:
-        progress.update(task1, advance=9)
-        progress.update(task2, advance=5)
-        progress.update(task3, advance=7)
-        time.sleep(0.02)
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -71,9 +58,21 @@ def add_new_email(manager):
     input("\nPress Enter to return to the main menu.")
 
 def import_email_list(manager):
-    emails = ['example1@example.com', 'example2@example.com']
-    manager.import_email_list(emails)
-    print("Emails imported.")
+    csv_path = input("Enter the path to the CSV file: ")
+    emails = []
+    try:
+        with open(csv_path, mode='r', newline='') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                email = row.get("Email address")
+                name = row.get("Prospect / Customer Name")
+                emails.append((email, name))
+        manager.import_email_list(emails)
+        print("Emails imported.")
+    except FileNotFoundError:
+        print("File not found. Please check the path and try again.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
     input("\nPress Enter to return to the main menu.")
 
 def create_email_campaign(campaign_manager):
