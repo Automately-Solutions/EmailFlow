@@ -13,6 +13,18 @@ from campaign_manager import Campaign
 
 install(show_locals=True)
 
+with Progress() as progress:
+
+    task1 = progress.add_task("[red]Downloading users...", total=1000)
+    task2 = progress.add_task("[green]Writing emails...", total=1000)
+    task3 = progress.add_task("[blue]Booting up systems...", total=1000)
+
+    while not progress.finished:
+        progress.update(task1, advance=9)
+        progress.update(task2, advance=5)
+        progress.update(task3, advance=7)
+        time.sleep(0.02)
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
