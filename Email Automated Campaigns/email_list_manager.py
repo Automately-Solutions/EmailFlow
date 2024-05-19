@@ -38,3 +38,12 @@ class EmailListManager:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
             writer.writerows(self.email_list)
+    
+    def increment_email_count(self, email_address):
+        for email in self.email_list:
+            if email["Email address"] == email_address:
+                old_count = email["Emails sent"]
+                email["Emails sent"] = str(int(email["Emails sent"]) + 1)
+                new_count = email["Emails sent"]
+                print(f"Updated email count for {email_address}: {old_count} -> {new_count}")  # Debug print
+                break

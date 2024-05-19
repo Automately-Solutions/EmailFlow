@@ -15,6 +15,9 @@ from campaign_manager import CampaignManager
 from email_sender import EmailSender
 
 install(show_locals=True)
+email_list_manager = EmailListManager()
+campaign_manager = CampaignManager()
+email_sender = EmailSender(email_list_manager)
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -117,6 +120,7 @@ def schedule_campaign(campaign_manager, manager, email_sender):
                 email = entry["Email address"]
                 name = entry["Prospect / Customer Name"]
                 email_sender.send_email(email, name, campaign)
+                manager.increment_email_count(email)  # Increment email count here
             print("Campaign scheduled and emails sent.")
     input("\nPress Enter to return to the main menu.")
 
@@ -135,9 +139,6 @@ def emails_log(campaign_manager):
     campaign_manager.view_campaigns()
     input("\nPress Enter to return to the main menu.")
 
-email_list_manager = EmailListManager()
-campaign_manager = CampaignManager()
-email_sender = EmailSender()
 
 while True:
     choice = main_menu()
