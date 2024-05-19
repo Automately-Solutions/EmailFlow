@@ -1,0 +1,81 @@
+body {
+    background-color: #04010B;
+    height: 100%;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    text-align: center; /* Centers all text */
+    color: #e5dddd; /* Applies the Alice White color */
+}
+
+.background-top-circle {
+    position: fixed; /* Ensures the circle stays in the same place even when scrolling */
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; /* Adjust the size of the circle as needed */
+    height: 500px; /* Adjust the size of the circle as needed */
+    background-image: linear-gradient(to bottom right, #4e68a4, #5e1a67); /* Gradient from top-left to bottom-right */
+    border-radius: 50%; /* This creates the circle shape */
+    filter: url(#grain) blur(10px); /* Applying the grain filter along with blur */
+    filter: blur(90px); /* Applies the blur effect directly to the circle */
+    z-index: -1; /* Ensures the circle stays behind the content */
+}
+
+.image-section {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-gap: 15px; /* Adjust the gap between images */
+    position: relative;
+    width: 50%;
+    margin-left: -250px; /* Move the section to the left */
+}
+
+.image {
+    width: 400px; /* Common size for all images */
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.img1 {
+    grid-row: 1;
+    justify-self: end;
+    transform: rotate(5deg);
+}
+
+.img2 {
+    grid-row: 2;
+    justify-self: end;
+    transform: rotate(-5deg);
+    margin-top: -70px; /* Adjust for overlapping */
+}
+
+.img3 {
+    grid-row: 3;
+    justify-self: end;
+    transform: rotate(5deg);
+    margin-top: -40px; /* Adjust for overlapping */
+}
+
+.img4 {
+    grid-row: 4;
+    justify-self: end;
+    transform: rotate(-5deg);
+    margin-top: -50px; /* Adjust for overlapping */
+}
+
+.vertical-line {
+    position: relative;
+    width: 2px;
+    height: 500px;
+    background-color: white;
+}
+
+.circle {
+    position: absolute;
+    left: -4px; /* Centering the circle on the line */
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+}
