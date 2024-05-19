@@ -15,7 +15,7 @@ body {
     transform: translate(-50%, -50%);
     width: 500px; /* Adjust the size of the circle as needed */
     height: 500px; /* Adjust the size of the circle as needed */
-    background-image: linear-gradient(to bottom right, #4e68a4, #5e1a67); /* Gradient from top-left to bottom-right */
+    background-image: linear-gradient(to bottom right, #5272bc, #197586); /* Gradient from top-left to bottom-right */
     border-radius: 50%; /* This creates the circle shape */
     filter: url(#grain) blur(10px); /* Applying the grain filter along with blur */
     filter: blur(90px); /* Applies the blur effect directly to the circle */
@@ -78,4 +78,17 @@ body {
     height: 10px;
     background-color: white;
     border-radius: 50%;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+spline-viewer {
+    width: 80%;
+    height: 80%;
 }
