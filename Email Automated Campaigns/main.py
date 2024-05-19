@@ -1,12 +1,15 @@
 import time
 import os
 import csv
+
 from rich import box
 from rich.panel import Panel
+from rich.table import Table
 from rich.prompt import Prompt
 from rich.console import Console
 from rich.progress import Progress
 from rich.traceback import install
+
 from email_list_manager import EmailListManager
 from campaign_manager import CampaignManager
 from email_sender import EmailSender
@@ -34,10 +37,9 @@ def main_menu():
     console.print("2. Add New Email")
     console.print("3. Import Email List")
     console.print("4. Create Email Campaign")
-    console.print("5. Schedule Campaign")
-    console.print("6. Send Emails")
-    console.print("7. View Campaign Log")
-    console.print("8. Exit")
+    console.print("5. Schedule Campaign and Send Emails")
+    console.print("6. View Campaign Log")
+    console.print("7. Exit")
 
     choice = input("\nEnter your choice: ")
     return choice
@@ -45,11 +47,25 @@ def main_menu():
 def view_email_list(manager):
     email_list = manager.get_email_list()
     if email_list:
-        print("Current Email List:")
+        table = Table(title="Current Email List")
+        table.add_column("Email Address", justify="left")
+        table.add_column("Prospect / Customer Name", justify="left")
+        table.add_column("User Added", justify="left")
+        table.add_column("Emails Sent", justify="left")
+        
         for email in email_list:
-            print(email)
+            table.add_row(
+                email["Email address"],
+                email["Prospect / Customer Name"],
+                email["User added"],
+                email["Emails sent"]
+            )
+        
+        console = Console()
+        console.print(table)
     else:
         print("Email list is empty.")
+    
     input("\nPress Enter to return to the main menu.")
 
 def add_new_email(manager):
@@ -138,10 +154,8 @@ while True:
     elif choice == '5':
         schedule_campaign(campaign_manager, email_list_manager, email_sender)
     elif choice == '6':
-        send_emails(email_sender, email_list_manager)
-    elif choice == '7':
         emails_log(campaign_manager)
-    elif choice == '8':
+    elif choice == '7':
         print("Exiting EmailFlow. Goodbye!")
         break
     else:
