@@ -1,6 +1,6 @@
 import csv
 import random
-from utils.email_sender import EmailSender
+from utils.drip_email_sender import EmailSender
 
 email_list_file = 'data/email_list.csv'
 campaign_logs_file = 'data/campaign_logs.csv'
@@ -21,7 +21,7 @@ def send_drip_campaign(email_list, campaign_type, email_sender):
     logs = []
     for entry in email_list:
         email = entry["Email"]
-        name = entry["Name"]
+        name = entry["Prospect/Customer Name"]
         status = email_sender.send_email(email, name, campaign_type)
         logs.append([email, campaign_type, status])
     save_campaign_log(campaign_logs_file, logs)

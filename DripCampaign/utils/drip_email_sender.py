@@ -6,8 +6,8 @@ from rich import box
 
 class EmailSender:
     def __init__(self):
-        self.api_key = os.getenv('MAILJET_API_KEY')
-        self.api_secret = os.getenv('MAILJET_SECRET_KEY')
+        self.api_key = 'MAILJET_API_KEY'
+        self.api_secret = 'MAILJET_SECRET_KEY'
         self.mailjet_client = Client(auth=(self.api_key, self.api_secret), version='v3.1')
         self.console = Console()
 
@@ -44,8 +44,8 @@ class EmailSender:
             'Messages': [
                 {
                     "From": {
-                        "Email": "your-email@example.com",
-                        "Name": "Your Company"
+                        "Email": "raoabdulhadi952@gmail.com",
+                        "Name": "The Network"
                     },
                     "To": [
                         {

@@ -1,5 +1,5 @@
-Email address,Prospect / Customer Name,User added,Emails sent
-wordsmithscript@gmail.com,WordSmith,2024-05-18 12:54:09,0
-pixelevatessolutions@gmail.com,Pixelevates,2024-05-18 12:54:09,0
-raoabdulhadi952@gmail.com,Rao,2024-05-18 12:54:09,0
-businessmodelnot1@gmail.com,BusinessModel1,2024-05-19 06:46:43,0
+Email,Prospect/Customer Name,User added,Emails sent,Status
+wordsmithscript@gmail.com,WordSmith,2024-05-18 12:54:09,0,Active
+pixelevatessolutions@gmail.com,Pixelevates,2024-05-18 12:54:09,0,Unsubscribed
+raoabdulhadi952@gmail.com,Rao,2024-05-18 12:54:09,0,Cart Abandoned
+businessmodelnot1@gmail.com,BusinessModel1,2024-05-19 06:46:43,0,New
