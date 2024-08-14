@@ -4,7 +4,7 @@
 
 EmailFlow is a robust email marketing automation tool designed to streamline your marketing campaigns. With EmailFlow, you can automate the sending of emails, manage your email lists effortlessly, and grow your audience through effective sign-up forms.
 
-### Features
+### Features ✨
 
 - **Automatic Email Sending**: Send emails to your entire list or specific segments with a single click.
 - **Email List Management**: Easily read and import existing email lists provided by users and store them in memory.
